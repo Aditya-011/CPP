@@ -1,29 +1,23 @@
-#include <bits/stdc++.h>
-using namespace std;
-void increment(int arr[], int a, int b, int c)
+vector<int> leaders(int a[], int n)
 {
-    for (int i = a; i <= b; i++)
+    // code here
+    vector<int> vec;
+    for (int i = 0; i < n; i++)
     {
-        arr[i] = arr[i] + c;
-    }
-}
-int main()
-{
-    int t;
-    cin >> t;
-    while (t--)
-    {
-        int n, m;
-        cin >> n >> m;
-        int arr[n] = {0};
-        while (m--)
+        int flag = 1;
+        for (int j = i; j < n; j++)
         {
-            int a, b, c;
-            cin >> a >> b >> c;
-            increment(arr, a, b, c);
+
+            if (a[i] < a[j])
+            {
+                flag = 0;
+                break;
+            }
         }
-        sort(arr, arr + n);
-        cout << arr[n - 1] << endl;
+        if (flag)
+        {
+            vec.push_back(a[i]);
+        }
     }
-    return 0;
+    return vec;
 }
