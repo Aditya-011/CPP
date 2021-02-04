@@ -10,21 +10,20 @@ vector<int> leaders(int a[], int n)
 {
     // code here
     vector<int> vec;
+    int b[n];
     for (int i = 0; i < n; i++)
     {
-        int flag = 1;
-        for (int j = i; j < n; j++)
-        {
+        b[i] = a[i];
+    }
+    sort(b, b + n, greater<int>());
+    int j = 0;
 
-            if (a[i] < a[j])
-            {
-                flag = 0;
-                break;
-            }
-        }
-        if (flag)
+    for (int i = 0; i < n; i++)
+    {
+        if (a[i] == b[j])
         {
             vec.push_back(a[i]);
+            j++;
         }
     }
     return vec;
