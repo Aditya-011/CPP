@@ -18,14 +18,15 @@ public:
         vector<pair<long long, int>> a;
         for (int i = 0; i < n; i++)
             a.push_back(make_pair(arr[i], i));
-        sort(a.begin(),a.end());
-        long long sum=0;
-        for(int i=0;i<n-1;i++)
+        sort(a.begin(), a.end());
+        long long sum = 0;
+        for (int i = 0; i < n - 1; i++)
         {
-            sum = sum + abs(a[i].first-a[i+1].first);
+            sum = sum + abs(a[i].second - a[i + 1].second);
         }
-    }
 
+        return sum;
+    }
 };
 
 // { Driver Code Starts.
