@@ -30,9 +30,11 @@ long long solve(int arr[], int n, int k)
 {
     // code here
     sort(arr, arr + n);
-    long long sum = 0, sum1 = 0, sum2 = 0, ans;
 
-    // Getting the sum of the array
+    // Initializing the value to 0
+    long long sum = 0, sum1 = 0, sum2 = 0;
+
+    // Getting the sum of the arr
     for (int i = 0; i < n; i++)
     {
         sum += arr[i];
@@ -45,13 +47,12 @@ long long solve(int arr[], int n, int k)
     }
 
     // Getting the sum of (n-k) elements
-    for (int i = k; i < n; i++)
+    for (int i = n - k; i < n; i++)
     {
         sum2 += arr[i];
     }
 
     // Returning the maximum possible difference.
-    ans = max(abs(sum1 - (sum - sum1)), abs(sum2 -
-                                            (sum - sum2)));
-    return ans;
+    return max(abs(sum1 - (sum - sum1)), abs(sum2 -
+                                             (sum - sum2)));
 }
