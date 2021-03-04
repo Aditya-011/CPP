@@ -1,9 +1,10 @@
 #include <bits/stdc++.h>
 using namespace std;
 #define ll long long
+// new
 ll noZero(ll a)
 {
-    ll newNumber = 0;
+    ll num = 0;
     vector<int> vec;
     while (a > 0)
     {
@@ -12,14 +13,15 @@ ll noZero(ll a)
             vec.push_back(tmp);
         a = a / 10;
     }
-    int b = vec.size();
-    while (b--)
+    //int b = vec.size();
+    for (int i = vec.size() - 1; i >= 0; i--)
     {
         /* code */
-        newNumber = newNumber * 10 + *vec.end();
-        vec.pop_back();
+        num = num * 10 + vec[i];
     }
-    return newNumber;
+
+    // cout << num << endl;
+    return num;
 }
 int main()
 {
