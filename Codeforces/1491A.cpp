@@ -9,19 +9,28 @@ int main()
     {
         cin >> arr[i];
     }
-    while (q--)
-    {
-        for (int i = 0; i < n; i++)
-        {
-            arr[i] = 1 - arr[i];
-            cout << arr[i] << " ";
-        }
-        cout << endl;
-    }
-    priority_queue<int> p;
+    priority_queue<int>p;
     for (int i = 0; i < n; i++)
     {
         p.push(arr[i]);
     }
-    cout << p.top() << endl;
+    
+    while (q--)
+    {
+        int a,b;
+        cin>>a>>b;
+        
+        
+        if(a==1)
+        {
+            arr[b] = 1- arr[b];
+        }
+        else if( a == 2)
+        {
+            sort(arr,arr+n);
+            cout<<arr[n-b]<<endl;
+        }
+
+    }
+    
 }
