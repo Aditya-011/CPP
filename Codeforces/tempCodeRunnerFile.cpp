@@ -1,35 +1,22 @@
 #include <bits/stdc++.h>
 using namespace std;
-#define ll long long
-ll noZero(ll a)
-{
-    ll newNumber = 0;
-    vector<int> vec;
-    while (a > 0)
-    {
-        int tmp = a % 10;
-        if (tmp != 0)
-            vec.push_back(tmp);
-        a = a / 10;
-    }
-    int b = vec.size();
-    while (b--)
-    {
-        /* code */
-        newNumber = newNumber * 10 + *vec.end();
-        vec.pop_back();
-    }
-    return newNumber;
-}
 int main()
 {
-    ll a, b, numA, numB;
-    cin >> a >> b;
-    ll sum = a + b;
-    numA = noZero(a);
-    numB = noZero(b);
-    if ((numA + numB) == noZero(a + b))
-        cout << "YES";
-    else
-        cout << "NO";
-}
+    int n, q;
+    cin >> n >> q;
+    int arr[n];
+    for (int i = 0; i < n; i++)
+    {
+        cin >> arr[i];
+    }
+
+    while (q--)
+    {
+
+        int a, b;
+        cin >> a >> b;
+
+        if (a == 1)
+        {
+            arr[b] = 1 - arr[b];
+        }
