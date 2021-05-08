@@ -1,7 +1,7 @@
 #include <bits/stdc++.h>
 using ll = unsigned long long;
 using namespace std;
-int countDigit(int n)
+int countDigit(ll n)
 {
     int count = 0;
     while (n != 0)
@@ -11,23 +11,22 @@ int countDigit(int n)
     }
     return count;
 }
-int result(int n, vector<ll> ref)
+int result(ll n, vector<ll> ref)
 {
-
+    int a = ref.size();
+    a--;
     int count = 0;
-    if (n < ref[ref.size() - 1])
-    {
-        // cout << "here"
-        //<< " ";
-    }
+
     while (n >= ref[0])
     {
         //////cout << "entered"
         //<< " ";
-        if (n >= *(ref.end()))
+        // cout << "\n";
+        if (n >= ref[a])
         {
-            n = n - *(ref.end());
-            cout << n << " ";
+            //cout << n << " - " << ref[a] << " = ";
+            n = n - ref[a];
+            //cout << n << " " << endl;
             // cout << "ok"
             //    << " ";
             count++;
@@ -35,7 +34,8 @@ int result(int n, vector<ll> ref)
         else
         {
 
-            ref.pop_back();
+            //ref.pop_back();
+            a--;
             //  cout << "popped"
             //    << " ";
         }
@@ -51,8 +51,8 @@ int main()
         ll n;
         cin >> n;
         int digits = countDigit(n) - 4;
-        cout << countDigit(n) << " ";
-        if (n >= 2050)
+        // cout << countDigit(n) << " Afet";
+        if (n % 2050 == 0)
         {
 
             vector<ll> ref;
@@ -60,15 +60,15 @@ int main()
             while (digits >= 0)
             {
                 ll tmp = 2050 * pow(10, digits);
-                //cout<<digits<<endl;
+                // cout << tmp << endl;
                 ref.push_back(tmp);
                 digits--;
             }
             sort(ref.begin(), ref.end());
-            /* for (int a = 0; a < ref.size(); a++)
-                cout << countDigit(ref[a]) << " ";
-*/
-            cout << result(n, ref);
+            /*for (int a = 0; a < ref.size(); a++)
+                cout << countDigit(ref[a]) << "\n";*/
+
+            cout << result(n, ref) << endl;
         }
         else
         {
