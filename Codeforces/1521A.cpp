@@ -1,6 +1,16 @@
 #include <bits/stdc++.h>
 using ll = long long int;
 using namespace std;
+
+const int M = 1e9 + 7;
+ll mod(ll x)
+{
+    return (x % M + M) % M;
+}
+ll mul(ll a, ll b)
+{
+    return mod((mod(a) * mod(b)));
+}
 int main()
 {
     ll t;
@@ -9,16 +19,14 @@ int main()
     {
         ll a, b;
         cin >> a >> b;
-        ll x, y, z;
-        x = a;
-        z = x * b;
-        y = z - x;
-        if (x == y)
+        if (b == 1)
         {
-            y += (a * b);
-            z += (a * b);
+            cout << "NO" << endl;
         }
-        cout << "YES" << endl;
-        cout << x << " " << y << " " << z << endl;
+        else
+        {
+            cout << "YES" << endl;
+            cout << a << ' ' << a * (long long)b << ' ' << a * (long long)(b + 1) << endl;
+        }
     }
 }

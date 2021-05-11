@@ -15,14 +15,14 @@ ll mul(ll a, ll b)
 }
 int main()
 {
-    ios::sync_with_stdio(0);
+    /* ios::sync_with_stdio(0);
     cin.tie(0);
     cout.tie(0);
     cout << fixed;
-    cout << setprecision(10);
+    cout << setprecision(10);*/
     //        freopen("timber_input.txt", "r", stdin);
     //        freopen("timber_output.txt", "w", stdout);
-    int t = 1;
+    int t;
     cin >> t;
 
     while (t--)
@@ -33,7 +33,6 @@ int main()
         {
             cout << "YES"
                  << "\n";
-            return;
         }
         if (r > b)
             swap(r, b);
@@ -47,7 +46,7 @@ int main()
             cout << "YES"
                  << "\n";
         }
-        return 0;
     }
-
-    /**/
+    return 0;
+}
+/**/
