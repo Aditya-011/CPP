@@ -29,24 +29,14 @@ int main()
     {
         ll r, b, d;
         cin >> r >> b >> d;
-        if (abs(r - b) <= d)
-        {
-            cout << "YES"
-                 << "\n";
-        }
         if (r > b)
             swap(r, b);
-        if (r * (d + 1LL) < b)
-        {
-            cout << "NO"
-                 << "\n";
-        }
+        if ((d + 1) * r >= b)
+            cout << "YES\n";
         else
-        {
-            cout << "YES"
-                 << "\n";
-        }
+            cout << "NO\n";
     }
+
     return 0;
 }
 /**/
