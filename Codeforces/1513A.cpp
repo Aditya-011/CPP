@@ -29,11 +29,11 @@ int main()
     {
         ll n, k;
         cin >> n >> k;
+        ll limit = (2 * k) + 1;
+        if (n < limit)
+            cout
+                << "-1\n";
 
-        if (n <= k)
-            cout << "-1\n";
-        else if (k >= 1 && n < 3)
-            cout << "-1\n";
         else
         {
             ll arr[n];
