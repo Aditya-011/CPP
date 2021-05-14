@@ -1,3 +1,1 @@
- cout << "NO\n";
-                return;
-            
+ven.size() 
