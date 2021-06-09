@@ -44,12 +44,12 @@ void solve()
             }
         }
     }
-    else if (n < 626)
+    else if (n < 676)
     {
         string res = "aa";
-        for (int i = 1; i >= 0; i--)
+        for (int i = 24; i >= 0; i--)
         {
-            for (int j = 25; j >= 0; j--)
+            for (int j = 24; j >= 0; j--)
             {
                 size_t found = q.find(res);
                 if (found == string::npos)
@@ -59,30 +59,40 @@ void solve()
                 }
                 else
                 {
-                    res[i]++;
+                    res[1]++;
                 }
             }
+            res[0]++;
+            res[1] = 'a';
         }
     }
 
     else
     {
         string res = "aaa";
-        for (int i = 2; i >= 0; i--)
+        for (int i = 24; i >= 0; i--)
+
         {
-            for (int i = 0; i < 26; i++)
+            for (int i = 24; i >= 0; i--)
             {
-                size_t found = q.find(res);
-                if (found == string::npos)
+                for (int i = 24; i >= 0; i--)
                 {
-                    cout << res << "\n";
-                    return;
+                    size_t found = q.find(res);
+                    if (found == string::npos)
+                    {
+                        cout << res << "\n";
+                        return;
+                    }
+                    else
+                    {
+                        res[2]++;
+                    }
                 }
-                else
-                {
-                    res[i]++;
-                }
+                res[1]++;
+                res[2] = 'a';
             }
+            res[0]++;
+            res[1] = 'a';
         }
     }
 }
@@ -96,7 +106,7 @@ int main()
     cout << setprecision(10);
     //        freopen("timber_input.txt", "r", stdin);
     //        freopen("timber_output.txt", "w", stdout);
-    int t = 1;
+    int t;
     cin >> t;
 
     while (t--)
