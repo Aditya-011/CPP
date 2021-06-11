@@ -13,6 +13,10 @@ ll mul(ll a, ll b)
 {
     return mod((mod(a) * mod(b)));
 }
+void solve()
+{
+    
+}
 int main()
 {
     ios::sync_with_stdio(0);
@@ -27,6 +31,7 @@ int main()
 
     while (t--)
     {
+        solve();
     }
     return 0;
 }

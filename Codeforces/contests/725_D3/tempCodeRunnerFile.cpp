@@ -1,0 +1,1 @@
+qr[i] == minn.first || qr[j] == minn.first
