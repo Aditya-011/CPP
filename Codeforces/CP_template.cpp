@@ -15,7 +15,6 @@ ll mul(ll a, ll b)
 }
 void solve()
 {
-    
 }
 int main()
 {
