@@ -1,1 +1,2 @@
-*s[i].begin() + s[i].length() - 2 + *(s[i].end() - 1)
+
+        cin >> s;
