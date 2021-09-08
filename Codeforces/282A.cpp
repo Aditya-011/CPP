@@ -1,18 +1,34 @@
-#include <bits/stdc++.h>
+#include<bits/stdc++.h>
 using namespace std;
 int main()
 {
-    int n;
-    cin >> n;
-    int count = 0;
+    int n,x=0;
+    cin>>n;
+    vector<string>vec;
     for (int i = 0; i < n; i++)
     {
-        string s;
-        cin >> s;
-        if (s == "--X" || s == "X--")
-            count--;
-        else if (s == "++X" || s == "X++")
-            count++;
+        string tmp;
+        cin>>tmp;
+        vec.push_back(tmp);
     }
-    cout << count;
+    for (int i = 0; i < vec.size(); i++)
+    {
+        for (int j = 0; j < vec[i].size(); j++)
+        {
+            if(vec[i][j] =='+')
+            {
+                x++;
+                break;
+            }
+            else if(vec[i][j]=='-')
+            {
+                x--;
+                break;
+            }
+
+        }
+        
+    }
+    cout<<x<<endl;
+    
 }
