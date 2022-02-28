@@ -176,6 +176,52 @@ void traverseRecursive(Node* head)
     traverseRecursive(head->next);
 }
 
+Node* reverseKNodes(Node* head, int k)
+{
+     // base case
+    if (!head)
+        return NULL;
+    Node* current = head;
+    Node* next = NULL;
+    Node* prev = NULL;
+    int count = 0;
+ 
+    /*reverse first k nodes of the linked list */
+    while (current != NULL && count < k) {
+        next = current->next;
+        current->next = prev;
+        prev = current;
+        current = next;
+        count++;
+    }
+ 
+    /* next is now a pointer to (k+1)th node
+    Recursively call for the list starting from current.
+    And make rest of the list as next of first node */
+    if (next != NULL)
+        head->next = reverseKNodes(next, k);
+ 
+    /* prev is new head of the input list */
+    return prev;
+}
+bool detectCycle(Node* &head)
+{
+    // Flloyd Algo (hare & tortoise algo ) tortoise moves one step ad hare moves two steps if there is a cyce both will meet at a point
+     Node* slow = head;
+     Node* fast = head; 
+     while (fast!=NULL && fast->next!=NULL)
+     {
+         slow=slow->next;
+         fast=fast->next->next;
+         if(fast==slow)
+         {
+             return 1;
+         }
+         
+     }
+         return 0;
+     
+}
 int main()
 {
     Node *head = new Node(1);
@@ -187,6 +233,8 @@ int main()
     // deleteAtPosition(head,1);
     // deleteAtLast(head);
     // deleteList(&head);
-   Node* newhead =  reverseIterative(head);
-    print(newhead);
+   //Node* newhead =  reverseIterative(head);
+
+    //print(head);
+    cout<<detectCycle(head);
 }
