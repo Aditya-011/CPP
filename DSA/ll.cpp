@@ -222,6 +222,24 @@ bool detectCycle(Node* &head)
          return 0;
      
 }
+void removeCycle(Node* &head)
+{
+Node* fast=head;
+Node* slow =head;
+do
+{
+    slow=slow->next;
+    fast=fast->next->next;
+} while (slow!=fast);
+fast=head;
+while (fast->next!=slow->next)
+{
+    slow=slow->next;
+    fast=fast->next;
+}
+slow->next=NULL;
+
+}
 int main()
 {
     Node *head = new Node(1);
