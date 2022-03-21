@@ -127,7 +127,7 @@ void deleteList(Node **head_ref)
         in the caller. */
     *head_ref = NULL;
 }
-Node* reverseIterative(Node* &head)
+Node *reverseIterative(Node *&head)
 {
     Node *curr = head;
     Node *prev = NULL;
@@ -146,81 +146,184 @@ Node* reverseIterative(Node* &head)
     }
     return prev;
 }
-Node* insertRecursive(Node* head,int data)
+Node *insertRecursive(Node *head, int data)
 {
-    if(head == NULL)
+    if (head == NULL)
     {
         return new Node(data);
     }
-    else 
-    head->next = insertRecursive(head->next,data);
+    else
+        head->next = insertRecursive(head->next, data);
     return head;
 }
-Node* reverseRecursive (Node* &head)
+Node *reverseRecursive(Node *&head)
 {
-    if(head==NULL || head == NULL)
+    if (head == NULL || head == NULL)
     {
         return head;
     }
-    Node* newHead = reverseRecursive(head->next);
-    head->next->next=head;
-    head->next=NULL;
+    Node *newHead = reverseRecursive(head->next);
+    head->next->next = head;
+    head->next = NULL;
     return newHead;
 }
-void traverseRecursive(Node* head)
+void traverseRecursive(Node *head)
 {
-    if(head == NULL)
-    return;
-    else 
-    cout<<head->data<<" ";
+    if (head == NULL)
+        return;
+    else
+        cout << head->data << " ";
     traverseRecursive(head->next);
 }
 
-Node* reverseKNodes(Node* head, int k)
+Node *reverseKNodes(Node *head, int k)
 {
-     // base case
+    // base case
     if (!head)
         return NULL;
-    Node* current = head;
-    Node* next = NULL;
-    Node* prev = NULL;
+    Node *current = head;
+    Node *next = NULL;
+    Node *prev = NULL;
     int count = 0;
- 
+
     /*reverse first k nodes of the linked list */
-    while (current != NULL && count < k) {
+    while (current != NULL && count < k)
+    {
         next = current->next;
         current->next = prev;
         prev = current;
         current = next;
         count++;
     }
- 
+
     /* next is now a pointer to (k+1)th node
     Recursively call for the list starting from current.
     And make rest of the list as next of first node */
     if (next != NULL)
         head->next = reverseKNodes(next, k);
- 
+
     /* prev is new head of the input list */
     return prev;
 }
-bool detectCycle(Node* &head)
+bool detectCycle(Node *&head)
 {
     // Flloyd Algo (hare & tortoise algo ) tortoise moves one step ad hare moves two steps if there is a cyce both will meet at a point
-     Node* slow = head;
-     Node* fast = head; 
-     while (fast!=NULL && fast->next!=NULL)
-     {
-         slow=slow->next;
-         fast=fast->next->next;
-         if(fast==slow)
-         {
-             return 1;
-         }
-         
-     }
-         return 0;
-     
+    Node *slow = head;
+    Node *fast = head;
+    while (fast != NULL && fast->next != NULL)
+    {
+        slow = slow->next;
+        fast = fast->next->next;
+        if (fast == slow)
+        {
+            return 1;
+        }
+    }
+    return 0;
+}
+void removeCycle(Node *&head)
+{
+    Node *fast = head;
+    Node *slow = head;
+    do
+    {
+        slow = slow->next;
+        fast = fast->next->next;
+    } while (slow != fast);
+    fast = head;
+    while (fast->next != slow->next)
+    {
+        slow = slow->next;
+        fast = fast->next;
+    }
+    slow->next = NULL;
+}
+Node *appendKNodes(Node *head, int k)
+{
+    if (head == NULL)
+        return NULL;
+
+    Node *tmp = head;
+    int len = 0;
+    while (tmp->next != NULL)
+    {
+        tmp = tmp->next;
+        len++;
+    }
+    int target = len - k;
+    Node *newTail = head;
+    for (int i = 0; i < target; i++)
+    {
+        newTail = newTail->next;
+    }
+    Node *newHead = newTail->next;
+    newTail->next = NULL;
+    tmp->next = head;
+    head = newHead;
+    return head;
+}
+void merge2SortedLL()
+{
+    Node *one1 = new Node(1);
+    Node *two1 = new Node(4);
+    Node *three1 = new Node(6);
+    Node *one2 = new Node(2);
+    Node *two2 = new Node(3);
+    Node *three2 = new Node(5);
+    one1->next = two1;
+    two1->next = three1;
+    three1->next = NULL;
+    one2->next = two2;
+    two2->next = three2;
+    three2->next = NULL;
+    int length = 6;
+    Node *ll1 = one1;
+    Node *ll2 = one2;
+    Node *newLL = new Node(-1);
+    Node *tmp = newLL;
+    while (ll1 != NULL && ll2 != NULL)
+    {
+        if (ll1->data < ll2->data)
+        {
+            tmp->next = ll1;
+            ll1 = ll1->next;
+        }
+        else
+        {
+            tmp->next = ll2;
+            ll2 = ll2->next;
+        }
+        tmp = tmp->next;
+    }
+    while (ll1 != NULL)
+    {
+        tmp->next = ll1;
+        tmp = tmp->next;
+        ll1 = ll1->next;
+    }
+    while (ll2 != NULL)
+    {
+        tmp->next = ll2;
+        tmp = tmp->next;
+        ll2 = ll2->next;
+    }
+    print(newLL->next);
+}
+Node* putEvenElFirst(Node* &head)
+{
+   Node* odd = head;
+Node* even = head->next;
+Node* evenStart = even;
+while (odd->next != NULL && even->next != NULL) {
+odd->next = even->next;
+odd = odd->next;
+even->next = odd->next;
+even = even->next;
+}
+odd->next = evenStart;
+if (odd->next != NULL) {
+even->next = NULL;
+}
 }
 int main()
 {
@@ -229,12 +332,20 @@ int main()
     head->next = third;
     // insertAtStart(&head, 2);
     insertInMiddle(head, 2);
+
     insertAtLast(head, 4);
+    insertAtLast(head, 5);
+    insertAtLast(head, 6);
+    insertAtLast(head, 7);
+
     // deleteAtPosition(head,1);
     // deleteAtLast(head);
     // deleteList(&head);
-   //Node* newhead =  reverseIterative(head);
-
-    //print(head);
-    cout<<detectCycle(head);
+    // Node* newhead =  reverseIterative(head);
+    // Node* newHead = appendKNodes(head,3);
+    // print(head);
+    // cout<<detectCycle(head);
+    //merge2SortedLL();
+    Node* newHead = putOddElFirst(head);
+    print(newHead);
 }
