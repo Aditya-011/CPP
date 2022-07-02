@@ -1,40 +1,48 @@
 // C++ program for optimal allocation of pages
 #include <bits/stdc++.h>
 using namespace std;
-int solve(string str)
-{
-     if(str.length()%2 == 1)
-        return -1;
-    int count  =0,res =0;
-    stack<char>st;
-    for(int  i=0;i<str.size();i++)
-    {
-        if(str[i] == '{')
-            st.push(str[i]);
-        else
-        {
-            if(!st.empty())
-                st.pop();
-            else
-                count++;
-        }
-    }
-    if((count + st.size())%2 == 1)
-        return -1;
-    else
-    {
-        res += (count/2) + (count%2) + (st.size()/2) + (st.size()%2);
-    }
-    return res;
-}
 int main()
 {
-	int t;
-    cin>>t;
-    while(t--)
+    int t;
+    cin >> t;
+    while (t--)
     {
-        string s;
-    cin>>s;
-    cout<<solve(s)<<endl;
+        int n,k;
+        cin>>n>>k;
+        int arr[n],x=0,res=-1;
+        for (int i = 0; i < n; i++)
+        {
+            cin>>arr[i];
+        }
+       
+        for (int i = 0; i < n; i++)
+        {
+           x += arr[i];
+        }
+        int l=0,r=n-1,co=0;;
+          while (l<=r&& x>=k)
+        
+        {
+            /* code */
+            if(x-arr[l]>=k)
+            {
+                co++;
+                 x = x-arr[l];
+            l++;
+           
+            }
+          //  else break;
+            if(x-arr[r]>=k)
+            {
+                co++;
+                 x=x-arr[r];
+                r--;
+               
+            }
+            else break;
+        }
+      
+          cout<<r-l+1<<arr[l]<<arr[r]<<endl<<co;      
+       
     }
 }

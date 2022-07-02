@@ -105,33 +105,72 @@ bool isPrime(ll n){if(n<=1)return false;if(n<=3)return true;if(n%2==0||n%3==0)re
 bool isPowerOfTwo(int n){if(n==0)return false;return (ceil(log2(n)) == floor(log2(n)));}
 bool isPerfectSquare(ll x){if (x >= 0) {ll sr = sqrt(x);return (sr * sr == x);}return false;}
 
-//Code by Abhinav Awasthi
-//Language C++
-//Practice->Success
-
-//Code
-void asquare()
+/*int solve(vll arr,int k)                // bruteforce approach
 {
-    ll n;
-    cin>>n;
+     vll sum;
+    int n = arr.size();
+    for(int i=0;i<n;i++)
+    {
+        ll tmp =0;
+        for(int j =i;j<n;j++)
+        {
+            tmp+= arr[j];
+           // cout<<tmp<<" ";
+            sum.push_back(tmp);
+        }
+       // cout<<endl;
+    }
+    sort(sum.begin(),sum.end(),greater<int>());
+    printvec(sum);
+     return sum[k-1];
+}
+*/
+int solve(vector<ll> arr,ll k)          //using minheaps
+{
+priority_queue<ll,vll,greater<ll>>q;
+int n = arr.size();
+for (int i = 0; i < n; i++)
+{
+    int sum =0;
+    for (int j = i; j < n; j++)
+    {
+      sum += arr[j];
+      if(q.size()<k)
+      q.push(sum);
+      else
+      {
+        if(q.top()<sum)
+        {
+            q.pop();
+            q.push(sum);
+        }
+      }
+    }
+    
+}
+return q.top();
+
 }
 //Main
 int main()
 {
-    Code By Asquare
+
     ll t;
     cin>>t;
-    fl(i,t)
+   while (t--)
+   {
+    ll n,k;
+    cin>>n>>k;
+    vll arr;
+    fl(i,n)
     {
-        asquare();
+        ll tmp;
+        cin>>tmp;
+arr.pb(tmp);
     }
-    // asquare();
-    // fl(i,t) //Kickstart
-    // {
-    //     cout<<"Case #"<<i+1<<": ";
-    //     asquare();
-    //     cout<<"\n";
-    // }
+    cout<<solve(arr,k)<<endl;
+   }
+   
     return 0;
 }
 //End
