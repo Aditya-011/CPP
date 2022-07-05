@@ -60,13 +60,60 @@ Tree* deleteLeafNode(Tree* root,int key)
     Tree* tmp = searchKey(root,key);
     delete(tmp);
 }
-void deleteNode(Tree* &root,int key)
+Tree* minVal(Tree* root)
 {
-    Tree* tmp = searchKey(root,key);
-    if(tmp!= NULL)
+    if(!root->left)
+    return root;
+
+    return minVal(root->left);
+}
+Tree*  deleteNode(Tree* &root,int key)
+{
+   if(!root)
+   return NULL;
+   if(root->data == key)
+   {
+    // 0 child
+    if(!root->left && !root->right)
     {
-        
+        delete(root);
+        return NULL;
     }
+    // 1 child
+    //left child
+     if(root->left && !root->right)
+     {
+        Tree* temp = root->left;
+        delete(root);
+        return temp;
+     }
+
+     // right child
+      if(root->right && !root->left)
+     {
+        Tree* temp = root->right;
+        delete(root);
+        return temp;
+     }
+     // 2 child
+     if(root->left && root->right)
+     {
+        int mini = minVal(root->right)->data;
+        root->data = mini;
+        root->right = deleteNode(root->right,mini);
+        return root;
+     }
+   }
+  else if(root->data > key)
+  {
+    root->left = deleteNode(root->left,key);
+    return root;
+  }
+  else if(root->data < key)
+  {
+    root->right = deleteNode(root->right,key);
+    return root;
+  }
 }
 void inOrder(Tree *&root)
 {
