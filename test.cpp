@@ -1,44 +1,48 @@
-#include <iostream>
-#include<bits/stdc++.h>
+// C++ program for optimal allocation of pages
+#include <bits/stdc++.h>
 using namespace std;
-
-
-int main() {
-	int t;
-	cin>>t;
-	while(t--)
-	{
-	     int n;
-	     cin>>n;
-	     string digit;
-	     cin>>digit;
-	     int temp=(int)digit[0]-48;
-	     if(temp==9)
-	     {
-	          for(int i=n-1;i>=0;i--)
-	          {
-	              if((char)digit[i]>49)
-	              {
-	                    digit[i]=(char)(2+48);
-	                    digit[i-1]=(char)((int)digit[i-1]-1);
-	              }
-	              else
-	              {
-	                   digit[i]=(char)(1+48-(int)digit[i]+48);
-	              }
-	          }
-	     }
-	     else
-	     {
-	          for(int i=0;i<n;i++)
-	          {
-	               digit[i]=(char)(57-(int)digit[i] + 48);
-	          }
-	     }
-	     for(int i=0;i<n;i++)
-	          cout<<digit[i];
-	     cout<<endl;
-
-	}
-	return 0;
+int main()
+{
+    int t;
+    cin >> t;
+    while (t--)
+    {
+        int n,k;
+        cin>>n>>k;
+        int arr[n],x=0,res=-1;
+        for (int i = 0; i < n; i++)
+        {
+            cin>>arr[i];
+        }
+       
+        for (int i = 0; i < n; i++)
+        {
+           x += arr[i];
+        }
+        int l=0,r=n-1,co=0;;
+          while (l<=r&& x>=k)
+        
+        {
+            /* code */
+            if(x-arr[l]>=k)
+            {
+                co++;
+                 x = x-arr[l];
+            l++;
+           
+            }
+          //  else break;
+            if(x-arr[r]>=k)
+            {
+                co++;
+                 x=x-arr[r];
+                r--;
+               
+            }
+            else break;
+        }
+      
+          cout<<r-l+1<<arr[l]<<arr[r]<<endl<<co;      
+       
+    }
 }

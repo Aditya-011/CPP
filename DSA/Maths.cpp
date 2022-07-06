@@ -5,7 +5,7 @@ void sieveOfEratosthenes()
     int n;
     cin >> n;
     // I'll mark the multiples of the number in the range if unmarked
-    bool prime[n];
+   // bool prime[n];
     bool prime[n + 1];
     memset(prime, true, sizeof(prime));
 
@@ -31,6 +31,29 @@ void sieveOfEratosthenes()
         if (prime[p])
             cout << p << " ";
 }
+// Function to display the array
+void display(int a[], int n)
+{
+    for (int i = 0; i < n; i++) {
+        cout << a[i] << "  ";
+    }
+    cout << endl;
+}
+  
+// Function to find the permutations
+void findPermutations(int a[], int n)
+{
+  
+    // Sort the given array
+    sort(a, a + n);
+  
+    // Find all possible permutations
+    cout << "Possible permutations are:\n";
+    do {
+        display(a, n);
+    } while (next_permutation(a, a + n));
+}
+  
 int gcd(int a, int b)
 {
     while(b!=0)
@@ -50,5 +73,7 @@ cout<<gcd(a,b);
  }
 int main()
 {
-    sieveOfEratosthenes();
+    //sieveOfEratosthenes();
+    int arr[] = {1,2,3,4};
+    findPermutations(arr,4);
 }
