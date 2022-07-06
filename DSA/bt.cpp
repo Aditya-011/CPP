@@ -75,7 +75,7 @@ Tree * findPred (Tree* root)
   {
    tmp = tmp->right;
   }
-  return tmp;;
+  return tmp;
   
 }
 void morrisTraversal(Tree* root)
