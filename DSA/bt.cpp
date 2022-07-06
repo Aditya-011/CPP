@@ -65,6 +65,48 @@ void levelOrder(Tree* &root)
     }
     
 }
+Tree * findPred (Tree* root)
+{
+    if(!root || !root->left)
+    return NULL;
+
+    Tree* tmp = root->left;
+  while (!tmp->right)
+  {
+   tmp = tmp->right;
+  }
+  return tmp;;
+  
+}
+void morrisTraversal(Tree* root)
+{
+    Tree* curr = root;
+    while (!root)
+    {
+        if(!root->left)
+        {
+            cout<<root->data<<" ";
+            curr = curr->right;
+        }
+        else
+        {
+            Tree* pred = findPred(curr);
+            if(!pred->right)        // to link to root
+            {
+                pred->right = curr;
+                curr = curr->left;
+            }
+            else
+            {
+                pred->right =NULL;          // to remove links from root
+                cout<<curr->data<<" ";
+                curr = curr->right;
+            }
+        }
+
+    }
+    
+}
 int main()
 {
     Tree *root = new Tree(0);
