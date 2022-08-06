@@ -139,6 +139,56 @@ vector<vector<int>> depthFirstSearch(int V, int E, vector<vector<int>> &edges)
     }
     return res;
 }
+bool bfsCycleDetect( unordered_map<int,list<int>> adjList, unordered_map<int,bool>&visited,unordered_map<int,int>&parent,int node)
+{
+    queue<int>q;
+    q.push(node);
+    visited[node] = 1;
+    parent[node] = -1;
+    while(!q.empty())
+    {
+        int target = q.front();
+        q.pop();
+        for(auto i:adjList[target])
+        {
+             if(!parent[i])
+            {
+                parent[i] = target;
+            }
+            if(!visited[i] && target == parent[i])
+            {
+                q.push(i);
+                visited[i] = 1;
+            }
+            else if(visited[i] && i != parent[target])
+                return 1;
+        }
+    }
+}
+string cycleDetection (vector<vector<int>>& edges, int n, int m)
+{
+    // Write your code here.
+    unordered_map<int,list<int>> adjList;
+    unordered_map<int,bool>visited;
+    unordered_map<int,int>parentList;
+    // create adjacency list
+    for(int i = 0;i<m;i++)
+    {
+        adjList[edges[i][0]].push_back(edges[i][1]);
+        adjList[edges[i][1]].push_back(edges[i][0]);
+    }
+    for(int i=0;i<n;i++)
+    {
+        if(!visited[i])
+        {
+            if(bfsCycleDetect(adjList,visited,parentList,i))
+            {
+                 return "Yes";
+            }
+        }
+    }
+    return "No";
+}
 int main()
 {
     cout << "Enter the number of nodes : ";
