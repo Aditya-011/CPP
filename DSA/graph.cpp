@@ -310,6 +310,45 @@ vector<int> topologicalSort(vector<vector<int>> &edges, int v, int e)  {
 
 }
 ///////////////
+
+                // Kahn's Algortihm (topological sort using BFS)
+vector<int> topologicalSort(vector<vector<int>> &edges, int v, int e)  {
+    // create adjList
+    unordered_map<int,list<int>>adj;
+    vector<int>ans;
+    for(int i =0;i<e;i++)
+    {
+        adj[edges[i][0]].push_back(edges[i][1]);
+    }
+    vector<int>indegree(v);
+    for(auto i : adj)
+    {
+        for(auto j : i.second)
+        {
+            indegree[j]++;
+        }
+    }
+    queue<int>q;
+    for(int i =0 ;i<v;i++)
+    {
+        if(indegree[i] == 0)
+            q.push(i);
+    }
+    while(!q.empty())
+    {
+        int front = q.front();
+        q.pop();
+        ans.push_back(front);
+        for(auto i : adj[front])
+        {
+            indegree[i]--;
+            if(indegree[i] == 0)
+                q.push(i);
+        }
+    }
+    return ans;
+}
+        ///////////////////////////
 int main()
 {
     cout << "Enter the number of nodes : ";
