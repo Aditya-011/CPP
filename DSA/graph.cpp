@@ -348,6 +348,47 @@ vector<int> topologicalSort(vector<vector<int>> &edges, int v, int e)  {
     }
     return ans;
 }
+
+        /// Cycle detection using BFS
+int detectCycleInDirectedGraphUsingBFS(int n, vector < pair < int, int >> & edges) {
+  // Write your code here.
+     unordered_map<int,list<int>>adj;
+   int count =0;
+    for(int i =0;i<edges.size();i++)
+    {
+        adj[edges[i].first-1].push_back(edges[i].second-1);
+    }
+    vector<int>indegree(n);
+    for(auto i : adj)
+    {
+        for(auto j : i.second)
+        {
+            indegree[j]++;
+        }
+    }
+    queue<int>q;
+    for(int i =0 ;i<n;i++)
+    {
+        if(indegree[i] == 0)
+            q.push(i);
+    }
+    while(!q.empty())
+    {
+        int front = q.front();
+        q.pop();
+       count++;
+        for(auto i : adj[front])
+        {
+            indegree[i]--;
+            if(indegree[i] == 0)
+                q.push(i);
+        }
+    }
+ if(count == n)
+     return 0;
+    else
+        return 1;
+}
         ///////////////////////////
 int main()
 {
