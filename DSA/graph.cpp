@@ -5,17 +5,18 @@ class graph
 {
     // unordered_map<T,list<T>>adj;
     vector<vector<int>> vec;
-    int nodes =0;
+    int nodes = 0;
+
 public:
     graph(int n)
     {
         this->nodes = n;
         for (int i = 0; i < nodes; i++)
         {
-            vector<int>tmp;
+            vector<int> tmp;
             for (int j = 0; j < nodes; j++)
             {
-               tmp.push_back(0);
+                tmp.push_back(0);
             }
             vec.push_back(tmp);
         }
@@ -61,6 +62,46 @@ public:
          }
      }*/
 };
+void bfsHelper(unordered_map<int, list<int>> adjList, unordered_map<int, bool> &visited, vector<int> &ans, int &i)
+{
+    queue<int> q;
+    q.push(i);
+    visited[i] = 1;
+    while (!q.empty())
+    {
+        int target = q.front();
+        for (auto i : adjList[target])
+        {
+            if (!visited[i])
+            {
+                q.push(i);
+                visited[i] = 1;
+            }
+        }
+        q.pop();
+        ans.push_back(target);
+    }
+}
+vector<int> BFS(int vertex, vector<pair<int, int>> edges)
+{
+    // Write your code here
+    vector<int> ans;
+    unordered_map<int, list<int>> adjList;
+    unordered_map<int, bool> visited;
+    for (int i = 0; i < edges.size(); i++)
+    {
+        adjList[edges[i].first].push_back(edges[i].second);
+        adjList[edges[i].second].push_back(edges[i].first);
+    }
+    for (int i = 0; i < edges.size(); i++)
+        visited[i] = 0;
+    for (int i = 0; i < vertex; i++)
+    {
+        if (!visited[i])
+            bfsHelper(adjList, visited, ans, i);
+    }
+    return ans;
+}
 int main()
 {
     cout << "Enter the number of nodes : ";
