@@ -233,6 +233,49 @@ string cycleDetection(vector<vector<int>> &edges, int n, int m)
     return "No";
 }
 
+#include <unordered_map>
+#include <list>
+
+bool dfsCycleHelper(unordered_map<int, bool> &visited, unordered_map<int, bool> &dfsVisited, unordered_map<int, list<int>> &adjList, int node)
+{
+    visited[node] = true;
+    dfsVisited[node] = true;
+    for (auto i : adjList[node])
+    {
+        if (!visited[i])
+        {
+            if (dfsCycleHelper(visited, dfsVisited, adjList, i))
+                return true;
+        }
+        else if (dfsVisited[i])
+        {
+            return true;
+        }
+    }
+    dfsVisited[node] = false;
+    return false;
+}
+int detectCycleInDirectedGraph(int n, vector<pair<int, int>> &edges)
+{
+    // Write your code here.
+    unordered_map<int, list<int>> adjList;
+    unordered_map<int, bool> visited;
+    unordered_map<int, bool> dfsVisited;
+    for (int i = 0; i < edges.size(); i++)
+    {
+        adjList[edges[i].first].push_back(edges[i].second);
+        // adjList[edges[i].second].push_back(edges[i].first);
+    }
+    for (int i = 0; i < n; i++)
+    {
+        if (!visited[i])
+        {
+            if (dfsCycleHelper(visited, dfsVisited, adjList, i))
+                return 1;
+        }
+    }
+    return 0;
+}
 int main()
 {
     cout << "Enter the number of nodes : ";
