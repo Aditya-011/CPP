@@ -275,7 +275,41 @@ int detectCycleInDirectedGraph(int n, vector<pair<int, int>> &edges)
         }
     }
     return 0;
+}   
+        // Topological Sort using DFS
+         void findTopoSort(int node, vector < int > & vis, stack < int > & st, unordered_map<int,list<int>> &adj) {
+    vis[node] = 1;
+
+    for (auto it: adj[node]) {
+      if (!vis[it]) {
+        findTopoSort(it, vis, st, adj);
+      }
+    }
+    st.push(node);
+  }
+vector<int> topologicalSort(vector<vector<int>> &edges, int v, int e)  {
+    stack < int > st;
+      vector < int > vis(e, 0);
+   unordered_map<int,list<int>> adj;
+   for (int i = 0; i < edges.size(); i++)
+    {
+        adj[edges[i][0]].push_back(edges[i][1]);
+        // adjList[edges[i].second].push_back(edges[i].first);
+    }
+      for (int i = 0; i < e; i++) {
+        if (vis[i] == 0) {
+          findTopoSort(i, vis, st, adj);
+        }
+      }
+      vector < int > topo;
+      while (!st.empty()) {
+        topo.push_back(st.top());
+        st.pop();
+      }
+      return topo;
+
 }
+///////////////
 int main()
 {
     cout << "Enter the number of nodes : ";
