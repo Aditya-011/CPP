@@ -102,6 +102,43 @@ vector<int> BFS(int vertex, vector<pair<int, int>> edges)
     }
     return ans;
 }
+
+void dfsHelper(unordered_map<int, set<int>> &adjList, vector<int> &tmp, int i, unordered_map<int, bool> &visited)
+{
+    tmp.push_back(i);
+    visited[i] = 1;
+    for (auto j : adjList[i])
+    {
+        if (!visited[j])
+            dfsHelper(adjList, tmp, j, visited);
+    }
+}
+vector<vector<int>> depthFirstSearch(int V, int E, vector<vector<int>> &edges)
+{
+    // Write your code here
+    unordered_map<int, set<int>> adjList;
+    unordered_map<int, bool> visited;
+    vector<vector<int>> res;
+    // int count=0;
+    // Create adjacency list
+    for (int i = 0; i < E; i++)
+    {
+        adjList[edges[i][0]].insert(edges[i][1]);
+        adjList[edges[i][1]].insert(edges[i][0]);
+    }
+    for (int i = 0; i < V; i++)
+    {
+
+        if (!visited[i])
+        {
+            // count++;
+            vector<int> tmp;
+            dfsHelper(adjList, tmp, i, visited);
+            res.push_back(tmp);
+        }
+    }
+    return res;
+}
 int main()
 {
     cout << "Enter the number of nodes : ";
