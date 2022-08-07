@@ -3,65 +3,125 @@ using namespace std;
 template <typename T>
 class graph
 {
-    // unordered_map<T,list<T>>adj;
-    vector<vector<int>> vec;
-    int nodes = 0;
-
 public:
-    graph(int n)
-    {
-        this->nodes = n;
-        for (int i = 0; i < nodes; i++)
-        {
-            vector<int> tmp;
-            for (int j = 0; j < nodes; j++)
-            {
-                tmp.push_back(0);
-            }
-            vec.push_back(tmp);
-        }
-    }
+    // unordered_map<T,list<T>>adj;
+    vector<vector<T>> vec;
+    int nodes = 5;
+    unordered_map<T, list<pair<T, T>>> adj;
 
-    void addEdge(T u, T v, bool direction)
+    /* graph(int n)
+     {
+         this->nodes = n;
+         for (int i = 0; i < nodes; i++)
+         {
+             vector<int> tmp;
+             for (int j = 0; j < nodes; j++)
+             {
+                 tmp.push_back(0);
+             }
+             vec.push_back(tmp);
+         }
+     }*/
+
+    void addEdge(T u, T v, T d, bool direction)
     {
-        vec[u][v] = 1;
-        if (!direction)
-            vec[v][u] = 1;
+        adj[u].push_back(make_pair(v, d));
+        /* if (!direction)
+             adj[v][u] = 1;*/
     }
-    void printMatrix()
+    void printAdjList()
     {
-        for (int i = 0; i < nodes; i++)
+        for (auto i : adj)
         {
-            for (int j = 0; j < nodes; j++)
-            {
-                cout << vec[i][j] << " ";
-            }
+            cout << i.first << " --> ";
+            for (auto j : i.second)
+                cout << "(" << j.first << ", " << j.second << ") "
+                     << ", ";
             cout << endl;
         }
     }
+    void topologicalDFS(T node,stack<T>&s,unordered_map<T,bool>&vis)
+    {
+        vis[node] = 1;
+        for (auto i : adj[node])
+        {
+            if (!vis[i.first])
+            {
+                topologicalDFS(i.first,s,vis);
+            }
+        }
+        s.push(node);
+    }
+    void calcDistance()
+    {
+        T src = 1;
+        unordered_map<T, bool> vis;
+        stack<T> s;
+        topologicalDFS(src,s,vis);
+        vector<T> dis(nodes);
+        for (int i = 0; i < nodes; i++)
+        {
+            dis[i] = INT_MAX;
+        }
+            dis[src]=0;
+            while (!s.empty())
+            {
+                /* code */
+                T top = s.top();
+                s.pop();
+               // cout<<top<<" //";
+                if(dis[top] != INT_MAX);
+                {
+                    for(auto i : adj[top])
+                    {
+                        if(dis[i.first]> dis[top] + i.second)
+                        dis[i.first] = dis[top] + i.second;
+                    }
+                }
+            }
+           cout<<"Shortest path array : " <<endl;
+           for (int  i = 0; i < dis.size(); i++)
+           {
+            cout<<dis[i]<<" ";
+           }
+           
+    }
 
-    // Adjacency List
-    /* void addEdge(T u,T v,bool direction)
+    /* void printMatrix()
      {
-         // direction 1->  undirected
-         // direction 0 -> directed
-         adj[u].push_back(v);
-         if(!direction)
+         for (int i = 0; i < nodes; i++)
          {
-             adj[v].push_back(u);
+             for (int j = 0; j < nodes; j++)
+             {
+                 cout << vec[i][j] << " ";
+             }
+             cout << endl;
          }
      }
-     void printAdjList()
-     {
-         for(auto i : adj)
-         {
-         cout<<i.first<<" --> ";
-         for(auto j : i.second)
-         cout<<j<<", ";
-         cout<<endl;
-         }
-     }*/
+
+     // Adjacency List
+     /* void addEdge(T u,T v,bool direction)
+      {
+          // direction 1->  undirected
+          // direction 0 -> directed
+          adj[u].push_back(v);
+          if(!direction)
+          {
+              adj[v].push_back(u);
+          }
+      }
+      void printAdjList()
+      {
+          for(auto i : adj)
+          {
+          cout<<i.first<<" --> ";
+          for(auto j : i.second)
+          cout<<j<<", ";
+          cout<<endl;
+          }
+      }*/
 };
+/*
 void bfsHelper(unordered_map<int, list<int>> adjList, unordered_map<int, bool> &visited, vector<int> &ans, int &i)
 {
     queue<int> q;
@@ -233,8 +293,7 @@ string cycleDetection(vector<vector<int>> &edges, int n, int m)
     return "No";
 }
 
-#include <unordered_map>
-#include <list>
+
 
 bool dfsCycleHelper(unordered_map<int, bool> &visited, unordered_map<int, bool> &dfsVisited, unordered_map<int, list<int>> &adjList, int node)
 {
@@ -275,7 +334,7 @@ int detectCycleInDirectedGraph(int n, vector<pair<int, int>> &edges)
         }
     }
     return 0;
-}   
+}
         // Topological Sort using DFS
          void findTopoSort(int node, vector < int > & vis, stack < int > & st, unordered_map<int,list<int>> &adj) {
     vis[node] = 1;
@@ -312,7 +371,7 @@ vector<int> topologicalSort(vector<vector<int>> &edges, int v, int e)  {
 ///////////////
 
                 // Kahn's Algortihm (topological sort using BFS)
-vector<int> topologicalSort(vector<vector<int>> &edges, int v, int e)  {
+vector<int> topologicalSortBFS(vector<vector<int>> &edges, int v, int e)  {
     // create adjList
     unordered_map<int,list<int>>adj;
     vector<int>ans;
@@ -392,7 +451,7 @@ int detectCycleInDirectedGraphUsingBFS(int n, vector < pair < int, int >> & edge
         ///////////////////////////
         //     Shortest Path in undirected Graph
 vector<int> shortestPath( vector<pair<int,int>> edges , int n , int m, int s , int t){
-	// create adjlist 
+    // create adjlist
     unordered_map<int,list<int>>adj;
     unordered_map<int,int> parent;
     unordered_map<int,bool> visited;
@@ -401,7 +460,7 @@ vector<int> shortestPath( vector<pair<int,int>> edges , int n , int m, int s , i
         adj[edges[i].first].push_back(edges[i].second);
          adj[edges[i].second].push_back(edges[i].first);
     }
-	  queue<int>q;
+      queue<int>q;
     q.push(s);
     parent[s] = -1;
      visited[s] = true;
@@ -422,7 +481,7 @@ vector<int> shortestPath( vector<pair<int,int>> edges , int n , int m, int s , i
     // prepare shortest path
     vector<int>ans;
     int curr = t;
-   
+
     while(curr != -1)
     {
          ans.push_back(curr);
@@ -430,24 +489,31 @@ vector<int> shortestPath( vector<pair<int,int>> edges , int n , int m, int s , i
     }
     reverse(ans.begin(),ans.end());
     return ans;
-    
+
 }
     //////////////
+    */
+//          shortest distance in DAG
 
 int main()
 {
     cout << "Enter the number of nodes : ";
     int n;
     cin >> n;
-    cout << "Enter the number of edges : ";
+    cout << "Enter the number of edges : \n";
     int m;
     cin >> m;
-    graph<int> g(n);
-    for (int i = 0; i < m; i++)
-    {
-        int u, v;
-        cin >> u >> v;
-        g.addEdge(u, v, 1);
-    }
-    g.printMatrix();
+    graph<int> g;
+    g.addEdge(0, 1, 5, 1);
+    g.addEdge(0, 2, 3, 1);
+    g.addEdge(1, 2, 2, 1);
+    g.addEdge(1, 3, 6, 1);
+    g.addEdge(2, 3, 7, 1);
+    g.addEdge(2, 4, 4, 1);
+    g.addEdge(2, 5, 2, 1);
+    g.addEdge(3, 4, -1, 1);
+    g.addEdge(4, 5, -2, 1);
+
+    g.printAdjList();
+    g.calcDistance();
 }
