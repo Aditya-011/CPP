@@ -390,6 +390,50 @@ int detectCycleInDirectedGraphUsingBFS(int n, vector < pair < int, int >> & edge
         return 1;
 }
         ///////////////////////////
+        //     Shortest Path in undirected Graph
+vector<int> shortestPath( vector<pair<int,int>> edges , int n , int m, int s , int t){
+	// create adjlist 
+    unordered_map<int,list<int>>adj;
+    unordered_map<int,int> parent;
+    unordered_map<int,bool> visited;
+    for(int i=0;i<m;i++)
+    {
+        adj[edges[i].first].push_back(edges[i].second);
+         adj[edges[i].second].push_back(edges[i].first);
+    }
+	  queue<int>q;
+    q.push(s);
+    parent[s] = -1;
+     visited[s] = true;
+    while(!q.empty())
+    {
+        int front = q.front();
+        q.pop();
+        for(auto i : adj[front])
+        {
+            if(!visited[i])
+            {
+                q.push(i);
+                visited[i] = true;
+                parent[i] = front;
+            }
+        }
+    }
+    // prepare shortest path
+    vector<int>ans;
+    int curr = t;
+   
+    while(curr != -1)
+    {
+         ans.push_back(curr);
+        curr = parent[curr];
+    }
+    reverse(ans.begin(),ans.end());
+    return ans;
+    
+}
+    //////////////
+
 int main()
 {
     cout << "Enter the number of nodes : ";
