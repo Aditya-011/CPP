@@ -494,6 +494,43 @@ vector<int> shortestPath( vector<pair<int,int>> edges , int n , int m, int s , i
     //////////////
     */
 //          shortest distance in DAG
+///                     Dijkkstra's algorithm
+vector<int> dijkstra(vector<vector<int>> &vec, int vertices, int edges, int source) {
+    // create adjacency list
+    unordered_map<int,list<pair<int,int>>>adj;
+    for(int i =0;i<edges;i++)
+    {
+        adj[vec[i][0]].push_back(make_pair(vec[i][1],vec[i][2]));
+        adj[vec[i][1]].push_back(make_pair(vec[i][0],vec[i][2]));
+    }
+    vector<int>dis(vertices);
+    for(int i=0;i<vertices;i++)
+        dis[i] = INT_MAX;
+    set<pair<int,int>>st;
+    int src = 0;
+    dis[src]= 0;
+    st.insert(make_pair(dis[src],src));
+    while(!st.empty())
+    {
+        // get topmost element
+        auto top = *(st.begin());
+        st.erase(st.begin());
+        int nodeValue = top.second;
+        int nodeDistance =top.first;
+        for(auto i:adj[nodeValue])
+        {
+            if(nodeDistance + i.second < dis[i.first])
+            {
+                if(st.find(make_pair(i.second,i.first))!= st.end())
+                    st.erase(make_pair(i.second,i.first));
+                dis[i.first] = nodeDistance + i.second;
+                st.insert(make_pair(dis[i.first],i.first));
+            }
+        }
+    }
+    return dis;
+}
+///
 
 int main()
 {
