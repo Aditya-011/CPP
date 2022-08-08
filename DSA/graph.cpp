@@ -532,6 +532,57 @@ vector<int> dijkstra(vector<vector<int>> &vec, int vertices, int edges, int sour
 }
 ///
 
+///     prim's algo
+vector<pair<pair<int, int>, int>> calculatePrimsMST(int n, int m, vector<pair<pair<int, int>, int>> &g)
+{
+    // create adjacency list
+    unordered_map<int,list<pair<int,int>>> adj;
+    for(int i=0;i<m;i++)
+    {
+        adj[g[i].first.first].push_back(make_pair(g[i].first.second,g[i].second));
+        adj[g[i].first.second].push_back(make_pair(g[i].first.first,g[i].second));
+    }
+    unordered_map<int,int> key,mst,parent;
+    int sum =0;
+    int src = 1;
+    
+    for(int i = 1;i<=n;i++)
+    {
+        key[i] = INT_MAX;
+         parent[i] = -1;
+           mst[i] = 0;
+    }
+    key[src] = 0;
+    while(sum<n)
+    {
+        int u,minEl = INT_MAX;
+        for(int i =1;i<=n;i++)
+        {
+            if(key[i]<minEl && mst[i] == 0)
+            {
+                u =i;
+                minEl= key[i];
+            }
+        }
+        mst[u] = 1;
+        for(auto i : adj[u])
+        {
+            if(key[i.first]>i.second && mst[i.first]==0)
+               { key[i.first]=i.second;
+               parent[i.first] = u;
+               }
+        }
+        sum++;
+    }
+    vector<pair<pair<int, int>, int>> res;
+    for(int i =2;i<=n;i++)
+    {
+        res.push_back({{parent[i],i},key[i]});
+    }
+    return res;
+}
+/////////////////
+
 int main()
 {
     cout << "Enter the number of nodes : ";
