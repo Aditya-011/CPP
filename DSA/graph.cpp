@@ -674,6 +674,64 @@ int minimumSpanningTree(vector<vector<int>> &edges, int n)
     return cost;
 }
 
+/*          Detect Bridge in graph          */
+#include<unordered_map>
+#include<list>
+void dfs( unordered_map<int,list<int>> &adj, vector<int>&dis, vector<int>&low, int &parent,  unordered_map<int,bool>&vis,vector<vector<int>> &res,int &timer,int node)
+{
+    vis[node] =1;
+    dis[node] = low[node] = timer++;
+    for(auto i : adj[node])
+    {
+        if(i != parent)
+        {
+            if(!vis[i])
+            {
+                 dfs(adj,dis,low,node,vis,res,timer,i);
+                low[node] = min(low[node],low[i]);
+                // check for edge
+                if(low[i]>dis[node])
+                {
+                    vector<int>tmp;
+                    tmp.push_back(node);
+                    tmp.push_back(i);
+                    res.push_back(tmp);
+                }
+            }
+            else        // case for backedge
+            {
+                low[node] = min(low[node],dis[i]);
+            }
+        }
+    }
+}
+vector<vector<int>> findBridges(vector<vector<int>> &edges, int v, int e) {
+ // create adj list
+    unordered_map<int,list<int>> adj;
+    for(int i =0;i<e;i++)
+    {
+        adj[edges[i][0]].push_back(edges[i][1]);
+          adj[edges[i][1]].push_back(edges[i][0]);
+    }
+    int parent = -1;
+    vector<int>dis(v),low(v);
+    unordered_map<int,bool>vis;
+    for(int i =0;i<v;i++)
+    {
+        low[i] = -1;
+        dis[i] = -1;
+    }
+    vector<vector<int>> res;
+    int timer =0;
+    for(int i =0;i<v;i++)
+    {
+       if(!vis[i])
+            dfs(adj,dis,low,parent,vis,res,timer,i);
+    }
+    return res;
+}
+/*                                                                                  */
+
 int main()
 {
     cout << "Enter the number of nodes : ";
