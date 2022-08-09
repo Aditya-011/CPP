@@ -793,7 +793,44 @@ int stronglyConnectedComponents(int v, vector<vector<int>> &edges)
     return count;
 }
 /*                                                                          */
+/*                      Bellman ford                    */
+#include <bits/stdc++.h>
+int bellmonFord(int n, int m, int src, int dest, vector<vector<int>> &edges)
+{
+    //
+    vector<int> dis(n + 1, 1e9);
 
+    dis[src] = 0;
+    int cnt = n - 1;
+    while (cnt--)
+    {
+        for (int i = 0; i < m; i++)
+        {
+            int u = edges[i][0];
+            int v = edges[i][1];
+            int wt = edges[i][2];
+            if (dis[u] != 1e9 && ((dis[u] + wt) < dis[v]))
+            {
+                dis[v] = dis[u] + wt;
+            }
+        }
+    }
+    // check for negative cycle
+    bool flag = 0;
+    for (int i = 0; i < m; i++)
+    {
+        int u = edges[i][0];
+        int v = edges[i][1];
+        int wt = edges[i][2];
+        if (dis[u] != 1e9 && ((dis[u] + wt) < dis[v]))
+        {
+            flag = 1;
+            break;
+        }
+    }
+    return flag ? -1 : dis[dest];
+}
+/*                                                                                                  */
 int main()
 {
     cout << "Enter the number of nodes : ";
